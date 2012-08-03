@@ -113,9 +113,9 @@ d-i passwd/user-default-groups string \
     sambashare
 d-i user-setup/encrypt-home boolean true
 
-d-i apt-setup/restricted boolean false
-d-i apt-setup/universe boolean false
-d-i apt-setup/backports boolean false
+d-i apt-setup/restricted boolean true
+d-i apt-setup/universe boolean true
+d-i apt-setup/backports boolean true
 #d-i apt-setup/use_mirror boolean false
 d-i apt-setup/services-select multiselect security
 d-i apt-setup/security_host string security.ubuntu.com
@@ -129,11 +129,11 @@ d-i apt-setup/local0/key string \
     http://mirror.citiviz.vpn/repo/root@mirror.citiviz.vpn.gpg.pub
 
 d-i debian-installer/allow_unauthenticated string false
-tasksel tasksel/first multiselect
+tasksel tasksel/first multiselect kubuntu-desktop
 
-d-i pkgsel/upgrade select none
+d-i pkgsel/upgrade select safe-upgrade
 d-i pkgsel/language-packs multiselect en
-d-i pkgsel/update-policy select none
+d-i pkgsel/update-policy select unattended-upgrades
 d-i pkgsel/include string \
     git \
     postgresql-9.1 \
@@ -143,7 +143,26 @@ d-i pkgsel/include string \
     python-egenix-mxdatetime \
     python-egenix-mxtools \
     python-shapely \
-    python-interval
+    python-interval \
+    openvpn \
+    network-manager-openvpn \
+    build-essential \
+    qgit \
+    python-wxgtk2.8 \
+    pgadmin3 \
+    qgis \
+    firefox \
+    firefox-kde-support \
+    flashplugin-installer \
+    ttf-dejavu
+    ttf-bitstream-vera \
+    ttf-xfree86-nonfree \
+    ttf-mscorefonts-installer \
+    xchat \
+    vim \
+    xemacs21 \
+    eclipse \
+    scala
 
 popularity-contest popularity-contest/participate boolean false
 d-i pkgsel/updatedb boolean false

@@ -1,0 +1,91 @@
+diff -u3 -r partman-auto-93/lib/recipes.sh partman-auto-93.new/lib/recipes.sh
+--- partman-auto-93/lib/recipes.sh	2010-05-28 16:00:23.000000000 +1200
++++ partman-auto-93.new/lib/recipes.sh	2010-11-18 12:27:42.000000000 +1300
+@@ -159,10 +159,27 @@
+ }
+ 
+ min_size () {
+-	local size
++	local size type
++	type=$1
++	ignore="${type:+${type}ignore}"
+ 	size=0
++	#When calculating the minimum required size, ignore partitions that
++	# we would otherwise be ignoring
++	#Also if we are doing LVM and this partition is supposed to be in
++	# a volume group, ignore it as we will have counted the min size of
++	# it's container already
++	# This means we could oversubscribe a container, but that's a separate issue
++	# that needs handling elsewhere
+ 	foreach_partition '
+-		size=$(($size + $1))'
++		if [ "$ignore" ] && [ "$(echo $partition | grep "$ignore")" ]; then
++			:
++		else
++			if [ "$type" = "lvm" ] && [ "$(echo $partition | grep in_vg)" ]; then
++				:
++			else
++				size=$(($size + $1))
++			fi
++		fi'
+ 	echo $size
+ }
+ 
+@@ -316,11 +333,11 @@
+ 	if [ ! -z "$RET" ] && [ -e "$RET" ]; then
+ 		recipe="$RET"
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			return 0
+ 		else
+ 			logger -t partman-auto \
+-			"Available disk space ($free_size) too small for expert recipe ($(min_size)); skipping"
++			"Available disk space ($free_size) too small for expert recipe ($(min_size $type)); skipping"
+ 		fi
+ 	fi
+ 
+@@ -333,7 +350,7 @@
+ 	for recipe in $recipedir/*; do
+ 		[ -f "$recipe" ] || continue
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			choices="${choices}${recipe}${TAB}${name}${NL}"
+ 			if [ "$default_recipe" = no ]; then
+ 				default_recipe="$recipe"
+@@ -366,10 +383,12 @@
+ }
+ 
+ expand_scheme() {
++	local type
++	type=$1
+ 	# Make factors small numbers so we can multiply on them.
+ 	# Also ensure that fact, max and fs are valid
+ 	# (Ofcourse in valid recipes they must be valid.)
+-	factsum=$(($(factor_sum) - $(min_size)))
++	factsum=$(($(factor_sum) - $(min_size $type)))
+ 	if [ $factsum -eq 0 ]; then
+ 		factsum=100
+ 	fi
+@@ -396,7 +415,7 @@
+ 	while [ "$scheme" != "$oldscheme" ]; do
+ 		oldscheme="$scheme"
+ 		factsum=$(factor_sum)
+-		unallocated=$(($free_size - $(min_size)))
++		unallocated=$(($free_size - $(min_size $type)))
+ 		if [ $unallocated -lt 0 ]; then
+ 			unallocated=0
+ 		fi
+diff -u3 -r partman-auto-93/perform_recipe partman-auto-93.new/perform_recipe
+--- partman-auto-93/perform_recipe	2010-04-22 16:00:38.000000000 +1200
++++ partman-auto-93.new/perform_recipe	2010-11-18 12:29:28.000000000 +1300
+@@ -31,7 +31,7 @@
+ 
+ db_progress STEP 1
+ 
+-expand_scheme
++expand_scheme default
+ 
+ ensure_primary
+ 

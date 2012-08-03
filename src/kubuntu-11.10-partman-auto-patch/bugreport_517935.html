@@ -1,0 +1,582 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<title>#517935 - debian-installer: partman-auto/expert_recipe minimum size sanity check counts both LVM VG and LV - Debian Bug report logs</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" href="/css/bugs.css" type="text/css">
+
+<script type="text/javascript">
+<!--
+function toggle_infmessages()
+{
+        allDivs=document.getElementsByTagName("div");
+        for (var i = 0 ; i < allDivs.length ; i++ )
+        {
+                if (allDivs[i].className == "infmessage")
+                {
+                        allDivs[i].style.display=(allDivs[i].style.display == 'none' | allDivs[i].style.display == '') ? 'block' : 'none';
+                }
+        }
+}
+-->
+</script>
+</head>
+<body>
+<h1>Debian Bug report logs - 
+<a href="mailto:517935@bugs.debian.org">#517935</a><br/>
+debian-installer: partman-auto/expert_recipe minimum size sanity check counts both LVM VG and LV</h1>
+<div class="versiongraph"></div>
+<div class="pkginfo">
+  <p>Package:
+     <a class="submitter" href="pkgreport.cgi?package=partman-auto-lvm">partman-auto-lvm</a>;
+Maintainer for <a href="pkgreport.cgi?package=partman-auto-lvm">partman-auto-lvm</a> is <a href="pkgreport.cgi?maint=debian-boot%40lists.debian.org">Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</a>; Source for <a href="pkgreport.cgi?package=partman-auto-lvm">partman-auto-lvm</a> is <a href="pkgreport.cgi?src=partman-auto-lvm">src:partman-auto-lvm</a>. </p>
+</div>
+
+<div class="buginfo">
+  <p>Reported by: <a href="pkgreport.cgi?submitter=beckert%40phys.ethz.ch">Axel Beckert &lt;beckert@phys.ethz.ch&gt;</a></p>
+  <p>Date: Tue,  3 Mar 2009 00:03:01 UTC</p>
+
+<p>Severity: normal</p>
+<p></p>
+<p>Merged with <a href="bugreport.cgi?bug=627315">627315</a></p>
+
+
+
+
+</div>
+
+<p><a href="mailto:517935@bugs.debian.org">Reply</a> or <a href="mailto:517935-subscribe@bugs.debian.org">subscribe</a> to this bug.</p>
+<p><a href="javascript:toggle_infmessages();">Toggle useless messages</a></p><div class="msgreceived"><p>View this report as an <a href="bugreport.cgi?mbox=yes;bug=517935">mbox folder</a>, <a href="bugreport.cgi?mbox=yes;bug=517935;mboxstatus=yes">status mbox</a>, <a href="bugreport.cgi?mboxmaint=yes;mbox=yes;bug=517935">maintainer mbox</a></p></div>
+
+<div class="infmessage"><hr>
+<a name="1"></a>
+<!-- time:1236038583 -->
+<strong>Report forwarded</strong>
+to <code>debian-bugs-dist@lists.debian.org, Axel Beckert &lt;beckert@phys.ethz.ch&gt;, Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>:<br>
+<code>Bug#517935</code>; Package <code>debian-installer</code>.
+ (Tue, 03 Mar 2009 00:03:03 GMT) <a href="bugreport.cgi?msg=2;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=2;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<div class="infmessage"><hr>
+<a name="3"></a>
+<!-- time:1236038583 -->
+<strong>Acknowledgement sent</strong>
+to <code>Axel Beckert &lt;beckert@phys.ethz.ch&gt;</code>:<br>
+New Bug report received and forwarded.  Copy sent to <code>Axel Beckert &lt;beckert@phys.ethz.ch&gt;, Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>.
+ (Tue, 03 Mar 2009 00:03:03 GMT) <a href="bugreport.cgi?msg=4;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=4;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<hr><p class="msgreceived"><a name="5"></a><a name="msg5"></a><a href="#5">Message #5</a> received at submit@bugs.debian.org (<a href="bugreport.cgi?msg=5;bug=517935">full text</a>, <a href="bugreport.cgi?msg=5;mbox=yes;bug=517935">mbox</a>):</p>
+<pre class="headers">
+<b>From:</b> Axel Beckert &lt;beckert@phys.ethz.ch&gt;
+<b>To:</b> Debian Bug Tracking System &lt;submit@bugs.debian.org&gt;
+<b>Subject:</b> debian-installer: partman-auto/expert_recipe minimum size sanity check counts both LVM VG and LV
+<b>Date:</b> Tue,  3 Mar 2009 00:56:38 +0100 (CET)
+</pre>
+<pre class="message">Package: debian-installer
+Severity: normal
+Version: 20090123
+
+While preparing the presseding file for our fully automated Lenny
+workstation installation I ran into the following bug:
+
+The following recipe works fine on a 80026 MB:
+
+d-i partman-auto/expert_recipe string				\
+	dphys-ws-part ::                                        \
+	256 10000000 512 ext3                                   \
+		$primary{ } $bootable{ }                        \
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /boot }                             \
+	.                                                       \
+	61440 1000000 100000000 lvm                             \
+		$primary{ } $defaultignore{ }                   \
+		method{ lvm } vg_name{ vg0 }                    \
+	.                                                       \
+	15248 40000 46080 ext3                                  \
+		$lvmok{ } in_vg{ vg0 } lv_name{ root }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ / }                                 \
+	.                                                       \
+	2048 10000 10240 ext3                                   \
+		$lvmok{ } in_vg{ vg0 } lv_name{ data }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /export/data1 }                     \
+	.                                                       \
+	1024 2000 10240 ext3                                    \
+		$lvmok{ } in_vg{ vg0 } lv_name{ scr }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /scratch }                          \
+	.                                                       \
+	10 1000 1048576 ext3                                    \
+		$lvmok{ } in_vg{ vg0 } lv_name{ dummy }		\
+		method{ keep }					\
+	.
+
+And the following does not and the default recipe (root + swap) is
+used instead:
+
+d-i partman-auto/expert_recipe string				\
+	dphys-ws-part ::                                        \
+	256 10000000 512 ext3                                   \
+		$primary{ } $bootable{ }                        \
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /boot }                             \
+	.                                                       \
+	61440 1000000 100000000 lvm                             \
+		$primary{ } $defaultignore{ }                   \
+		method{ lvm } vg_name{ vg0 }                    \
+	.                                                       \
+	15249 40000 46080 ext3                                  \
+		$lvmok{ } in_vg{ vg0 } lv_name{ root }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ / }                                 \
+	.                                                       \
+	2048 10000 10240 ext3                                   \
+		$lvmok{ } in_vg{ vg0 } lv_name{ data }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /export/data1 }                     \
+	.                                                       \
+	1024 2000 10240 ext3                                    \
+		$lvmok{ } in_vg{ vg0 } lv_name{ scr }		\
+		method{ format } format{ }                      \
+		use_filesystem{ } filesystem{ ext3 }            \
+		mountpoint{ /scratch }                          \
+	.                                                       \
+	10 1000 1048576 ext3                                    \
+		$lvmok{ } in_vg{ vg0 } lv_name{ dummy }		\
+		method{ keep }					\
+	.
+
+The only difference: The minimal / LV size grew from 15248 to 15249.
+
+You can easily check that minimum boot partition size plus minimal VG
+size fit onto the disk without problems and that all the remaining
+partitions fit into the VG with their minimal size.
+
+But the installer seems to sum up all minimal sizes independent of
+being LVM volume groups or LVM logical volumes. The first recipe has a
+sum of all minimal sizes of 80026 and the second one has 80027. So the
+second recipe is ignored on that disk.
+
+So this basically prohibits to create a / LV with a minimal size of 45
+GB on a 80 GB disk.
+
+I though can workaround by setting the priority of the / LV so high
+that it gets nearly the maximum wanted size (as shown in the examples
+above).
+
+Happened with i386 installer btw, haven&#39;t checked the amd64 yet, but I
+don&#39;t expect this to be architecture dependent.
+
+-- System Information:
+Debian Release: 4.0
+  APT prefers oldstable
+  APT policy: (500, &#39;oldstable&#39;)
+Architecture: amd64 (x86_64)
+Shell:  /bin/sh linked to /bin/bash
+Kernel: Linux 2.6.26.3-amd64-1
+Locale: LANG=C, LC_CTYPE=C (charmap=ANSI_X3.4-1968)
+
+
+
+</pre>
+
+<div class="msgreceived"><hr>
+<a name="6"></a>
+<!-- command:package -->
+<!-- requester: Christian Perrier &lt;bubulle@debian.org&gt; -->
+<!-- request_addr: control@bugs.debian.org -->
+<!-- time:1284214328 -->
+<!-- new_data:
+$new_data = {
+              &#39;package&#39; =&gt; &#39;partman-auto-lvm&#39;
+            };
+-->
+<!-- old_data:
+$old_data = {
+              &#39;package&#39; =&gt; &#39;debian-installer&#39;
+            };
+-->
+<strong>Bug reassigned from package &#39;debian-installer&#39; to &#39;partman-auto-lvm&#39;.</strong>
+Request was from <code>Christian Perrier &lt;bubulle@debian.org&gt;</code>
+to <code>control@bugs.debian.org</code>.
+ (Sat, 11 Sep 2010 14:12:08 GMT) <a href="bugreport.cgi?msg=7;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=7;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<div class="msgreceived"><hr>
+<a name="8"></a>
+<!-- command:found -->
+<!-- requester: Christian Perrier &lt;bubulle@debian.org&gt; -->
+<!-- request_addr: control@bugs.debian.org -->
+<!-- time:1284214328 -->
+<!-- new_data:
+$new_data = {
+              &#39;found_versions&#39; =&gt; []
+            };
+-->
+<!-- old_data:
+$old_data = {
+              &#39;found_versions&#39; =&gt; [
+                                    &#39;debian-installer/20090123&#39;
+                                  ]
+            };
+-->
+<strong>Bug No longer marked as found in versions debian-installer/20090123.</strong>
+Request was from <code>Christian Perrier &lt;bubulle@debian.org&gt;</code>
+to <code>control@bugs.debian.org</code>.
+ (Sat, 11 Sep 2010 14:12:08 GMT) <a href="bugreport.cgi?msg=9;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=9;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<div class="infmessage"><hr>
+<a name="10"></a>
+<!-- request_addr: debian-bugs-dist@lists.debian.org, Debian Install System Team &lt;debian-boot@lists.debian.org&gt; -->
+<!-- time:1290042183 -->
+<strong>Information forwarded</strong>
+to <code>debian-bugs-dist@lists.debian.org, Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>:<br>
+<code>Bug#517935</code>; Package <code>partman-auto-lvm</code>.
+ (Thu, 18 Nov 2010 01:03:03 GMT) <a href="bugreport.cgi?msg=11;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=11;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<div class="infmessage"><hr>
+<a name="12"></a>
+<!-- request_addr: Craig Miskell &lt;craig.miskell@opus.co.nz&gt; -->
+<!-- time:1290042183 -->
+<strong>Acknowledgement sent</strong>
+to <code>Craig Miskell &lt;craig.miskell@opus.co.nz&gt;</code>:<br>
+Extra info received and forwarded to list.  Copy sent to <code>Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>.
+ (Thu, 18 Nov 2010 01:03:03 GMT) <a href="bugreport.cgi?msg=13;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=13;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<hr><p class="msgreceived"><a name="14"></a><a name="msg14"></a><a href="#14">Message #14</a> received at 517935@bugs.debian.org (<a href="bugreport.cgi?msg=14;bug=517935">full text</a>, <a href="bugreport.cgi?msg=14;mbox=yes;bug=517935">mbox</a>):</p>
+<pre class="headers">
+<b>From:</b> Craig Miskell &lt;craig.miskell@opus.co.nz&gt;
+<b>To:</b> 517935@bugs.debian.org
+<b>Subject:</b> Patches that should fix
+<b>Date:</b> Thu, 18 Nov 2010 13:35:27 +1300
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=14;att=0;bug=517935">Message part 1</a> (text/plain, inline)]</pre>
+<pre class="message">-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+	I have attached patches which I believe fix the problem; it requires the
+min_size function to know which type of partitioning is being done (lvm or
+default), which requires a few changes to other places than might be at first
+obvious.
+
+I have semi-tested this (playing with the shell scripts manually), but have
+*not* tested this in an actual install setting (my netinst build skills are
+limited and I&#39;m still trying to figure that out).
+
+This may not be the best way to solve it, and may not be complete, but it&#39;s
+better than what&#39;s there now.
+
+- --
+Craig Miskell
+Senior Systems Administrator
+Opus International Consultants
+Phone: +64 4 471 7209
+That&#39;s it, I&#39;m acting the way America acts best - Unilaterally.
+    -Homer Simpson, on a roundabout in England
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkzkdM8ACgkQmDveRtxWqna74wCfffrFmoXsIe3mcBgpqpSZqYvp
+j/8AnjGlUUbu4ySa4+U5gn94PLE1baAe
+=51dK
+-----END PGP SIGNATURE-----
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=14;filename=partman-auto.patch;att=1;bug=517935">partman-auto.patch</a> (text/x-patch, inline)]</pre>
+<pre class="message">diff -u3 -r partman-auto-93/lib/recipes.sh partman-auto-93.new/lib/recipes.sh
+--- partman-auto-93/lib/recipes.sh	2010-05-28 16:00:23.000000000 +1200
++++ partman-auto-93.new/lib/recipes.sh	2010-11-18 12:27:42.000000000 +1300
+@@ -159,10 +159,27 @@
+ }
+ 
+ min_size () {
+-	local size
++	local size type
++	type=$1
++	ignore=&quot;${type:+${type}ignore}&quot;
+ 	size=0
++	#When calculating the minimum required size, ignore partitions that
++	# we would otherwise be ignoring
++	#Also if we are doing LVM and this partition is supposed to be in
++	# a volume group, ignore it as we will have counted the min size of
++	# it&#39;s container already
++	# This means we could oversubscribe a container, but that&#39;s a separate issue
++	# that needs handling elsewhere
+ 	foreach_partition &#39;
+-		size=$(($size + $1))&#39;
++		if [ &quot;$ignore&quot; ] &amp;&amp; [ &quot;$(echo $partition | grep &quot;$ignore&quot;)&quot; ]; then
++			:
++		else
++			if [ &quot;$type&quot; = &quot;lvm&quot; ] &amp;&amp; [ &quot;$(echo $partition | grep in_vg)&quot; ]; then
++				:
++			else
++				size=$(($size + $1))
++			fi
++		fi&#39;
+ 	echo $size
+ }
+ 
+@@ -316,11 +333,11 @@
+ 	if [ ! -z &quot;$RET&quot; ] &amp;&amp; [ -e &quot;$RET&quot; ]; then
+ 		recipe=&quot;$RET&quot;
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			return 0
+ 		else
+ 			logger -t partman-auto \
+-			&quot;Available disk space ($free_size) too small for expert recipe ($(min_size)); skipping&quot;
++			&quot;Available disk space ($free_size) too small for expert recipe ($(min_size $type)); skipping&quot;
+ 		fi
+ 	fi
+ 
+@@ -333,7 +350,7 @@
+ 	for recipe in $recipedir/*; do
+ 		[ -f &quot;$recipe&quot; ] || continue
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			choices=&quot;${choices}${recipe}${TAB}${name}${NL}&quot;
+ 			if [ &quot;$default_recipe&quot; = no ]; then
+ 				default_recipe=&quot;$recipe&quot;
+@@ -366,10 +383,12 @@
+ }
+ 
+ expand_scheme() {
++	local type
++	$type=$1
+ 	# Make factors small numbers so we can multiply on them.
+ 	# Also ensure that fact, max and fs are valid
+ 	# (Ofcourse in valid recipes they must be valid.)
+-	factsum=$(($(factor_sum) - $(min_size)))
++	factsum=$(($(factor_sum) - $(min_size $type)))
+ 	if [ $factsum -eq 0 ]; then
+ 		factsum=100
+ 	fi
+@@ -396,7 +415,7 @@
+ 	while [ &quot;$scheme&quot; != &quot;$oldscheme&quot; ]; do
+ 		oldscheme=&quot;$scheme&quot;
+ 		factsum=$(factor_sum)
+-		unallocated=$(($free_size - $(min_size)))
++		unallocated=$(($free_size - $(min_size $type)))
+ 		if [ $unallocated -lt 0 ]; then
+ 			unallocated=0
+ 		fi
+diff -u3 -r partman-auto-93/perform_recipe partman-auto-93.new/perform_recipe
+--- partman-auto-93/perform_recipe	2010-04-22 16:00:38.000000000 +1200
++++ partman-auto-93.new/perform_recipe	2010-11-18 12:29:28.000000000 +1300
+@@ -31,7 +31,7 @@
+ 
+ db_progress STEP 1
+ 
+-expand_scheme
++expand_scheme default
+ 
+ ensure_primary
+ 
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=14;filename=partman-auto-lvm.patch;att=2;bug=517935">partman-auto-lvm.patch</a> (text/x-patch, inline)]</pre>
+<pre class="message">diff -U3 -r partman-auto-lvm-36/lib/auto-lvm.sh partman-auto-lvm-36.new/lib/auto-lvm.sh
+--- partman-auto-lvm-36/lib/auto-lvm.sh	2010-01-23 01:05:22.000000000 +1300
++++ partman-auto-lvm-36.new/lib/auto-lvm.sh	2010-11-18 12:30:58.000000000 +1300
+@@ -26,7 +26,7 @@
+ 	get_last_free_partition_infos $dev
+ 	free_size=$(convert_to_megabytes $free_size)
+ 
+-	expand_scheme
++	expand_scheme lvm
+ 
+ 	ensure_primary
+ 
+diff -U3 -r partman-auto-lvm-36/perform_recipe_by_lvm partman-auto-lvm-36.new/perform_recipe_by_lvm
+--- partman-auto-lvm-36/perform_recipe_by_lvm	2010-11-18 12:31:38.000000000 +1300
++++ partman-auto-lvm-36.new/perform_recipe_by_lvm	2010-11-18 12:30:43.000000000 +1300
+@@ -52,7 +52,7 @@
+ 
+ db_progress STEP 1
+ 
+-expand_scheme
++expand_scheme lvm
+ 
+ db_progress STEP 1
+ 
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=14;filename=partman-auto.patch.sig;att=3;bug=517935">partman-auto.patch.sig</a> (application/octet-stream, attachment)]</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=14;filename=partman-auto-lvm.patch.sig;att=4;bug=517935">partman-auto-lvm.patch.sig</a> (application/octet-stream, attachment)]</pre>
+
+<div class="infmessage"><hr>
+<a name="15"></a>
+<!-- request_addr: debian-bugs-dist@lists.debian.org, Debian Install System Team &lt;debian-boot@lists.debian.org&gt; -->
+<!-- time:1290043983 -->
+<strong>Information forwarded</strong>
+to <code>debian-bugs-dist@lists.debian.org, Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>:<br>
+<code>Bug#517935</code>; Package <code>partman-auto-lvm</code>.
+ (Thu, 18 Nov 2010 01:33:03 GMT) <a href="bugreport.cgi?msg=16;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=16;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<div class="infmessage"><hr>
+<a name="17"></a>
+<!-- request_addr: Craig Miskell &lt;craig.miskell@opus.co.nz&gt; -->
+<!-- time:1290043983 -->
+<strong>Acknowledgement sent</strong>
+to <code>Craig Miskell &lt;craig.miskell@opus.co.nz&gt;</code>:<br>
+Extra info received and forwarded to list.  Copy sent to <code>Debian Install System Team &lt;debian-boot@lists.debian.org&gt;</code>.
+ (Thu, 18 Nov 2010 01:33:03 GMT) <a href="bugreport.cgi?msg=18;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=18;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<hr><p class="msgreceived"><a name="19"></a><a name="msg19"></a><a href="#19">Message #19</a> received at 517935@bugs.debian.org (<a href="bugreport.cgi?msg=19;bug=517935">full text</a>, <a href="bugreport.cgi?msg=19;mbox=yes;bug=517935">mbox</a>):</p>
+<pre class="headers">
+<b>From:</b> Craig Miskell &lt;craig.miskell@opus.co.nz&gt;
+<b>To:</b> 517935@bugs.debian.org
+<b>Subject:</b> Patch fix
+<b>Date:</b> Thu, 18 Nov 2010 14:31:36 +1300
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=19;att=0;bug=517935">Message part 1</a> (text/plain, inline)]</pre>
+<pre class="message">-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Sorry, nasty little typo in the untested bit of the code.  New patch attached.
+- --
+Craig Miskell
+Senior Systems Administrator
+Opus International Consultants
+Phone: +64 4 471 7209
+Hateful, blasphemous, prejudiced, vulgar, rude, or ignorant remarks are
+the music of a free society, and the  relentless patter of idiots is how
+we know we&#39;re in one. When all the words in our public conversation are
+fair, good, and true, it&#39;s time to make a run for the fence.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkzkgfcACgkQmDveRtxWqnZROgCbBg33o6/uVXbjZH3umfqPh3WB
+xr0AoJ0i/6xCRs1B6CJWII7n4KwUnO75
+=ALlI
+-----END PGP SIGNATURE-----
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=19;filename=partman-auto.patch;att=1;bug=517935">partman-auto.patch</a> (text/x-patch, inline)]</pre>
+<pre class="message">diff -u3 -r partman-auto-93/lib/recipes.sh partman-auto-93.new/lib/recipes.sh
+--- partman-auto-93/lib/recipes.sh	2010-05-28 16:00:23.000000000 +1200
++++ partman-auto-93.new/lib/recipes.sh	2010-11-18 12:27:42.000000000 +1300
+@@ -159,10 +159,27 @@
+ }
+ 
+ min_size () {
+-	local size
++	local size type
++	type=$1
++	ignore=&quot;${type:+${type}ignore}&quot;
+ 	size=0
++	#When calculating the minimum required size, ignore partitions that
++	# we would otherwise be ignoring
++	#Also if we are doing LVM and this partition is supposed to be in
++	# a volume group, ignore it as we will have counted the min size of
++	# it&#39;s container already
++	# This means we could oversubscribe a container, but that&#39;s a separate issue
++	# that needs handling elsewhere
+ 	foreach_partition &#39;
+-		size=$(($size + $1))&#39;
++		if [ &quot;$ignore&quot; ] &amp;&amp; [ &quot;$(echo $partition | grep &quot;$ignore&quot;)&quot; ]; then
++			:
++		else
++			if [ &quot;$type&quot; = &quot;lvm&quot; ] &amp;&amp; [ &quot;$(echo $partition | grep in_vg)&quot; ]; then
++				:
++			else
++				size=$(($size + $1))
++			fi
++		fi&#39;
+ 	echo $size
+ }
+ 
+@@ -316,11 +333,11 @@
+ 	if [ ! -z &quot;$RET&quot; ] &amp;&amp; [ -e &quot;$RET&quot; ]; then
+ 		recipe=&quot;$RET&quot;
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			return 0
+ 		else
+ 			logger -t partman-auto \
+-			&quot;Available disk space ($free_size) too small for expert recipe ($(min_size)); skipping&quot;
++			&quot;Available disk space ($free_size) too small for expert recipe ($(min_size $type)); skipping&quot;
+ 		fi
+ 	fi
+ 
+@@ -333,7 +350,7 @@
+ 	for recipe in $recipedir/*; do
+ 		[ -f &quot;$recipe&quot; ] || continue
+ 		decode_recipe $recipe $type
+-		if [ $(min_size) -le $free_size ]; then
++		if [ $(min_size $type) -le $free_size ]; then
+ 			choices=&quot;${choices}${recipe}${TAB}${name}${NL}&quot;
+ 			if [ &quot;$default_recipe&quot; = no ]; then
+ 				default_recipe=&quot;$recipe&quot;
+@@ -366,10 +383,12 @@
+ }
+ 
+ expand_scheme() {
++	local type
++	type=$1
+ 	# Make factors small numbers so we can multiply on them.
+ 	# Also ensure that fact, max and fs are valid
+ 	# (Ofcourse in valid recipes they must be valid.)
+-	factsum=$(($(factor_sum) - $(min_size)))
++	factsum=$(($(factor_sum) - $(min_size $type)))
+ 	if [ $factsum -eq 0 ]; then
+ 		factsum=100
+ 	fi
+@@ -396,7 +415,7 @@
+ 	while [ &quot;$scheme&quot; != &quot;$oldscheme&quot; ]; do
+ 		oldscheme=&quot;$scheme&quot;
+ 		factsum=$(factor_sum)
+-		unallocated=$(($free_size - $(min_size)))
++		unallocated=$(($free_size - $(min_size $type)))
+ 		if [ $unallocated -lt 0 ]; then
+ 			unallocated=0
+ 		fi
+diff -u3 -r partman-auto-93/perform_recipe partman-auto-93.new/perform_recipe
+--- partman-auto-93/perform_recipe	2010-04-22 16:00:38.000000000 +1200
++++ partman-auto-93.new/perform_recipe	2010-11-18 12:29:28.000000000 +1300
+@@ -31,7 +31,7 @@
+ 
+ db_progress STEP 1
+ 
+-expand_scheme
++expand_scheme default
+ 
+ ensure_primary
+ 
+</pre>
+<pre class="mime">[<a href="bugreport.cgi?msg=19;filename=partman-auto.patch.sig;att=2;bug=517935">partman-auto.patch.sig</a> (application/octet-stream, attachment)]</pre>
+
+<div class="msgreceived"><hr>
+<a name="20"></a>
+<!-- requester: Micah Anderson &lt;micah@debian.org&gt; -->
+<!-- request_addr: control@bugs.debian.org -->
+<!-- time:1306279446 -->
+<strong>Merged <a href="bugreport.cgi?bug=517935">517935</a> <a href="bugreport.cgi?bug=627315">627315</a>.</strong>
+Request was from <code>Micah Anderson &lt;micah@debian.org&gt;</code>
+to <code>control@bugs.debian.org</code>.
+ (Tue, 24 May 2011 23:24:06 GMT) <a href="bugreport.cgi?msg=21;bug=517935">Full text</a> and <a href="bugreport.cgi?msg=21;mbox=yes;bug=517935">rfc822 format</a> available.</div>
+
+<hr>
+<p class="msgreceived">Send a report that <a href="http://bugs.debian.org/cgi-bin/bugspam.cgi?bug=517935">this bug log contains spam</a>.</p>
+<hr>
+<ADDRESS>Debian bug tracking system administrator &lt;<A HREF="mailto:owner@bugs.debian.org">owner@bugs.debian.org</A>&gt;.
+Last modified:
+<!--timestamp-->Fri Aug  3 20:01:49 2012<!--end timestamp-->; 
+Machine Name:
+<!--machinename-->beach.debian.org<!--machinename-->
+<P>
+<A HREF="http://www.debian.org/Bugs/">Debian Bug tracking system</A><BR>
+Copyright (C) 1999 Darren O. Benham,
+1997,2003 nCipher Corporation Ltd,
+1994-97 Ian Jackson.
+</ADDRESS>
+
+</body>
+</html>

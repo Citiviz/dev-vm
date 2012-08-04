@@ -20,7 +20,7 @@ d-i netcfg/wireless_wep string
 d-i mirror/protocol string http
 d-i mirror/http/hostname string mirror.switch.ch
 d-i mirror/http/directory string /ftp/mirror/ubuntu
-d-i mirror/http/proxy string
+d-i mirror/http/proxy string http://10.0.2.2:3142/
 d-i mirror/suite string oneiric
 d-i clock-setup/utc boolean true
 d-i time/zone string Europe/Zurich

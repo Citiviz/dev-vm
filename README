@@ -14,7 +14,7 @@ local       | $server=10.0.2.2
 current dev-vm.cfg seeds (k0 and k1) requires:
 
 http://$server/seeds/dev-vm.cfg
-http://$server/files/ubuntu-11.10_partman-lvm-fix.tar           (*)
+http://$server/seeds/files/ubuntu-11.10_partman-lvm-fix.tar     (*)
 http://$server/repo                                             (content of local repo/ directory)
 http://$server/repo/root@mirror.citiviz.vpn.gpg.pub
 http://$server/repo/ubuntu/db/...
@@ -34,3 +34,4 @@ should contain all the (other) packages for a full installation or should be abl
     tar cvf ../../ubuntu-11.10_partman-lvm-fix.tar .
     cd ../..
 
+for convenience, the seeds/files is already populated in the git repository

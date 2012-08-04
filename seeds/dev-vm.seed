@@ -6,6 +6,7 @@ d-i preseed/early_command string \
 	(echo "[local] couldn't download patch. Check your VPN connection!" && false)
 
 d-i netcfg/get_hostname string dev-vm
+d-i netcfg/get_hostname seen true
 d-i netcfg/get_domain string test.citiviz.vpn
 
 d-i debian-installer/locale string fr_CH.UTF-8
@@ -99,11 +100,11 @@ d-i base-installer/kernel/image string linux-virtual
 d-i passwd/root-login boolean true
 d-i passwd/root-password-crypted password $1$qkmGNs6O$/Uhd9zB0OZtveO8w1Szs6/
 d-i passwd/make-user boolean true
-d-i passwd/user-fullname string "DevVM Test User"
+d-i passwd/user-fullname string DevVM Test User
 #d-i passwd/user-uid string 1000
-d-i passwd/username string "citiviz"
-d-i passwd/user-password password "citiviz"
-d-i passwd/user-password-again password "citiviz"
+d-i passwd/username string citiviz
+d-i passwd/user-password password citiviz
+d-i passwd/user-password-again password citiviz
 #d-i passwd/user-password-crypted password {{PASSWORD_MD5}}
 d-i user-setup/allow-password-weak boolean true
 d-i passwd/user-default-groups string \
@@ -121,17 +122,17 @@ d-i user-setup/encrypt-home boolean true
 d-i apt-setup/restricted boolean true
 d-i apt-setup/universe boolean true
 d-i apt-setup/backports boolean true
-#d-i apt-setup/use_mirror boolean false
+d-i apt-setup/use_mirror boolean true
 d-i apt-setup/services-select multiselect security
 d-i apt-setup/security_host string security.ubuntu.com
 d-i apt-setup/security_path string /ubuntu
 d-i apt-setup/local0/comment string \
     "Citiviz Debian/Ubuntu Mirror - http://mirror.citiviz.vpn/repo/ubuntu"
 d-i apt-setup/local0/repository string \
-    http://10.0.2.2/repo/ubuntu oneiric main
+    http://127.0.0.1/repo/ubuntu oneiric main
 d-i apt-setup/local0/source boolean false
 d-i apt-setup/local0/key string \
-    http://10.0.2.2/repo/root@mirror.citiviz.vpn.gpg.pub
+    http://127.0.0.1/repo/root@mirror.citiviz.vpn.gpg
 
 d-i debian-installer/allow_unauthenticated string false
 tasksel tasksel/first multiselect kubuntu-desktop

@@ -5,6 +5,9 @@ d-i preseed/early_command string \
 	echo "[local] patched." || \
 	(echo "[local] couldn't download patch. Check your VPN connection!" && false)
 
+d-i netcfg/get_hostname string dev-vm
+d-i netcfg/get_domain string test.citiviz.vpn
+
 d-i debian-installer/locale string fr_CH.UTF-8
 d-i console-setup/ask_detect boolean false
 d-i keyboard-configuration/layoutcode string ch
@@ -96,11 +99,13 @@ d-i base-installer/kernel/image string linux-virtual
 d-i passwd/root-login boolean true
 d-i passwd/root-password-crypted password $1$qkmGNs6O$/Uhd9zB0OZtveO8w1Szs6/
 d-i passwd/make-user boolean true
-#d-i passwd/user-fullname string {{FIRST_NAME}} {{LAST_NAME}}
-#d-i passwd/username string {{USERNAME}}
+d-i passwd/user-fullname string "DevVM Test User"
 #d-i passwd/user-uid string 1000
+d-i passwd/username string "citiviz"
+d-i passwd/user-password password "citiviz"
+d-i passwd/user-password-again password "citiviz"
 #d-i passwd/user-password-crypted password {{PASSWORD_MD5}}
-#d-i user-setup/allow-password-weak boolean true
+d-i user-setup/allow-password-weak boolean true
 d-i passwd/user-default-groups string \
     audio \
     cdrom \

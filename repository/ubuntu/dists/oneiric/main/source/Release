@@ -1,0 +1,5 @@
+Component: main
+Origin: mirror.citiviz.vpn/ubuntu
+Label: Citiviz Overlay Ubuntu Repository
+Architecture: source
+Description: Citiviz Overlay Ubuntu Repository

@@ -1,0 +1,22 @@
+Package: python-interval
+Source: interval
+Version: 1.0.0-1
+Architecture: all
+Maintainer: Jacob Page <jacob.h.page@gmail.com>
+Installed-Size: 104
+Depends: python, python-support (>= 0.90.0)
+Provides: python2.5-interval, python2.6-interval
+Priority: optional
+Section: python
+Filename: pool/main/i/interval/python-interval_1.0.0-1_all.deb
+Size: 14958
+SHA256: a63b457e8abadf3a7a6b2944b579a7e6aaa318b70c70bcd1f8f7a34095819b3e
+SHA1: f5a82d42e0f937ee7fa58435818a38934b182f46
+MD5sum: 73529381c3787260df6da24aa5bcfc3d
+Description: Interval and IntervalSet Data Types
+ .
+       Unlike the built-in sets, IntervalSets contain sets of Interval objects,
+       which describe an interval of continuous values.  These IntervalSets can
+       be used in pretty much the same ways as set objects.
+Python-Version: 2.5, 2.6
+

@@ -1,0 +1,8 @@
+Origin: mirror.citiviz.vpn/ubuntu
+Label: Citiviz Overlay Ubuntu Repository
+Codename: oneiric
+Architectures: i386 amd64 source
+Components: main
+Description: Citiviz Overlay Ubuntu Repository
+SignWith: A30B646E
+Pull: oneiric

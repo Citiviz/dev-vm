@@ -1,0 +1,9 @@
+Origin: mirror.citiviz.vpn/debian
+Label: Citiviz Overlay Debian Repository
+Suite: stable
+Codename: squeeze
+Architectures: amd64 source
+Components: main
+Description: Citiviz Overlay Debian Repository
+SignWith: 62FBE646
+Pull: squeeze

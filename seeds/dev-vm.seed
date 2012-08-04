@@ -1,7 +1,7 @@
 # fix wrong min_size algo for expert_recipe
 d-i preseed/early_command string \
 	echo "[local] downloading portman-auto "min_size" patch."; \
-	wget -q -O /dev/stdout http://mirror.citiviz.vpn/dev-vm/files/kubuntu-11.10_partman-lvm-fix.tar | tar x && \
+	wget -q -O /dev/stdout http://mirror.citiviz.vpn/seeds/files/kubuntu-11.10_partman-lvm-fix.tar | tar x && \
 	echo "[local] patched." || \
 	(echo "[local] couldn't download patch. Check your VPN connection!" && false)
 
@@ -121,12 +121,12 @@ d-i apt-setup/services-select multiselect security
 d-i apt-setup/security_host string security.ubuntu.com
 d-i apt-setup/security_path string /ubuntu
 d-i apt-setup/local0/comment string \
-    "Citiviz Debian/Ubuntu Mirror - http://mirror.citiviz.vpn/ubuntu"
+    "Citiviz Debian/Ubuntu Mirror - http://mirror.citiviz.vpn/repo/ubuntu"
 d-i apt-setup/local0/repository string \
-    http://mirror.citiviz.vpn/ubuntu oneiric main
+    http://mirror.citiviz.vpn/repo/ubuntu oneiric main
 d-i apt-setup/local0/source boolean false
 d-i apt-setup/local0/key string \
-    http://mirror.citiviz.vpn/root@mirror.citiviz.vpn.gpg.pub
+    http://mirror.citiviz.vpn/repo/root@mirror.citiviz.vpn.gpg.pub
 
 d-i debian-installer/allow_unauthenticated string false
 tasksel tasksel/first multiselect openssh-server

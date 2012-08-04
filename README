@@ -1,0 +1,36 @@
+# Files
+
+repo/       : contains the ad-hoc citiviz repository for ubuntu-11.10
+seeds/      : contains the seed files for different virtual machines (currently only dev-vm)
+src/        : source files, patches and build scripts
+
+# Network configuration:
+
+$server (running apache)
+
+production  | $server=mirror.citiviz.vpn
+local       | $server=10.0.2.2
+
+current dev-vm.cfg seeds (k0 and k1) requires:
+
+http://$server/seeds/dev-vm.cfg
+http://$server/files/ubuntu-11.10_partman-lvm-fix.tar           (*)
+http://$server/repo                                             (content of local repo/ directory)
+http://$server/repo/root@mirror.citiviz.vpn.gpg.pub
+http://$server/repo/ubuntu/db/...
+http://$server/repo/ubuntu/dist/...
+http://$server/repo/ubuntu/pool/...                             (contains just python-interval now)
+
+$proxy  (running apt-cacher-ng)
+
+production  | $proxy=mirror.citiviz.vpn:3142
+local       | $proxy=10.0.2.2:3142
+
+should contain all the (other) packages for a full installation or should be able to fetch them from internet.
+
+(*) to create ubuntu-11.10_partman-lvm-fix.tar:
+
+    cd src/ubuntu-11.10_partman-lvm-fix/patched
+    tar cvf ../../ubuntu-11.10_partman-lvm-fix.tar .
+    cd ../..
+

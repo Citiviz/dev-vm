@@ -135,17 +135,9 @@ d-i pkgsel/upgrade select none
 d-i pkgsel/language-packs multiselect en
 d-i pkgsel/update-policy select none
 d-i pkgsel/include string \
-    git \
-    postgresql-9.1 \
-    postgresql-client-9.1 \
-    postgresql-9.1-postgis \
-    python-psycopg2 \
-    python-egenix-mxdatetime \
-    python-egenix-mxtools \
-    python-shapely \
     python-interval
 
-popularity-contest popularity-contest/participate boolean false
+#popularity-contest popularity-contest/participate boolean false
 d-i pkgsel/updatedb boolean false
 d-i grub-installer/skip boolean false
 d-i grub-installer/only_debian boolean true

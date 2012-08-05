@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# -- args
+FIRSTNAME=${1}
+FULLNAME=${2}
+EMAIL=${3}
+
+# -- defaults
+NICK_NAME="${FIRSTNAME}"
+USER_NAME="${USER}"
+REAL_NAME="${FULLNAME} <${EMAIL}>"
+
+subst() {
+    sed \
+        -e 's|${nick_name}|'"${NICK_NAME}"|g \
+        -e 's|${real_name}|'"${REAL_NAME}"|g \
+        -e 's|${user_name}|'"${USER_NAME}"|g \
+        -e 's|${USER}|'"${USER}"|g \
+        -e 's|${HOME}|'"${HOME}"|g
+}
+
+# -- copy/finalize xchat2 config
+mkdir -p $HOME/.xchat2/
+cat config/xchat2/servlist_.conf    | subst > ${HOME}/.xchat2/servlist_.conf
+cat config/xchat2/xchat.conf        | subst > ${HOME}/.xchat2/xchat.conf

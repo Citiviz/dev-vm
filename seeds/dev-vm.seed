@@ -140,35 +140,7 @@ tasksel tasksel/first multiselect kubuntu-desktop
 d-i pkgsel/upgrade select safe-upgrade
 d-i pkgsel/language-packs multiselect en
 d-i pkgsel/update-policy select unattended-upgrades
-d-i pkgsel/include string \
-    git \
-    postgresql-9.1 \
-    postgresql-client-9.1 \
-    postgresql-9.1-postgis \
-    python-psycopg2 \
-    python-egenix-mxdatetime \
-    python-egenix-mxtools \
-    python-shapely \
-    python-interval \
-    openvpn \
-    network-manager-openvpn \
-    build-essential \
-    qgit \
-    python-wxgtk2.8 \
-    pgadmin3 \
-    qgis \
-    firefox \
-    firefox-kde-support \
-    flashplugin-installer \
-    ttf-dejavu
-    ttf-bitstream-vera \
-    ttf-xfree86-nonfree \
-    ttf-mscorefonts-installer \
-    xchat \
-    vim \
-    xemacs21 \
-    eclipse \
-    scala
+d-i pkgsel/include string
 
 #popularity-contest popularity-contest/participate boolean false
 d-i pkgsel/updatedb boolean false
@@ -226,4 +198,17 @@ xserver-xorg xserver-xorg/config/monitor/mode-list \
 # directly, or use the apt-install and in-target commands to easily install
 # packages and run commands in the target system.
 #d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
+
+
+d-i preseed/late_command string \
+    echo "entering /target/root"; \
+    cd /target/root/; \
+    echo "fetching packages.list."; \
+    wget http://127.0.0.1/seeds/files/dev-vm/packages.list; \
+    echo "installing extra packages."; \
+    cat packages.list | xargs apt-install; \
+    echo "fetching post-install.sh script."; \
+    wget http://127.0.0.1/seeds/files/dev-vm/post-install.sh; chmod +x /target/root/post-install.sh; \
+    echo "executing post-install.sh script."; \
+    in-target /root/post-install.sh
 

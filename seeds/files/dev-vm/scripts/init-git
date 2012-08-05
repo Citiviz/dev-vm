@@ -1,0 +1,27 @@
+#!/bin/sh
+
+FULLNAME=$(grep "^${USER}" /etc/passwd | cut -d : -f 5)
+
+split_fullname() {
+    FIRSTNAME=$1
+    shift
+    LASTNAME=$*
+}
+
+split_fullname $FULLNAME
+
+to_lower() {
+    sed -e 's/[A-Z]/\l&/g'
+}
+
+join_names() {
+    tr ' ' '-'
+}
+
+print_email() {
+    echo "$(echo $FIRSTNAME | to_lower).$(echo $LASTNAME | to_lower | join_names)@citiviz.com"
+}
+
+
+git config --global user.name "${FULLNAME}"
+git config --global user.email "$(print_email)"

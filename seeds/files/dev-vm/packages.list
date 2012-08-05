@@ -11,6 +11,8 @@ python-interval
 openvpn 
 network-manager-openvpn 
 build-essential 
+linux-headers-3.0.0-12-generic
+dkms
 qgit 
 python-wxgtk2.8 
 pgadmin3 
@@ -24,5 +26,3 @@ ttf-xfree86-nonfree
 xchat 
 vim 
 xemacs21 
-eclipse 
-scala

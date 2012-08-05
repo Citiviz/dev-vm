@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # -- args
-FIRSTNAME=${1}
-FULLNAME=${2}
-EMAIL=${3}
+FULLNAME=${1}
+EMAIL=${2}
+FIRSTNAME=${3}
 
 # -- defaults
 NICK_NAME="${FIRSTNAME}"

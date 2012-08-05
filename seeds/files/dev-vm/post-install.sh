@@ -2,6 +2,7 @@
 
 FR_DIR="/usr/local/share/first-run"
 
+rm -rf $FR_DIR
 mkdir -p $FR_DIR
 cd $FR_DIR
 
@@ -15,7 +16,7 @@ cd $FR_DIR
 
     USER=$(echo $USER_PASSWD_ENTRY | cut -d: -f1)
     HOME=$(echo $USER_PASSWD_ENTRY | cut -d: -f6)
-    NAME=$(echo $USER_PASSWD_ENTRY | cut -d: -f5)
+    NAME=$(echo $USER_PASSWD_ENTRY | cut -d: -f5 | cut -d, -f1)
 
     split_fullname() {
         FIRSTNAME=$1
@@ -71,10 +72,12 @@ do_script() {
     show_and_run script/${what} ${what} ${args}
 }
 
-do_script init-git "${FIRSTNAME}" "${LASTNAME}" "${EMAIL}"
-do_script make-xchat2-config "${FIRSTNAME}" "${FULLNAME}" "${EMAIL}"
-
-
-
+do_script init-git           "${NAME}" "${EMAIL}"
+do_script make-xchat2-config "${NAME}" "${EMAIL}" "${FIRSTNAME}"
 
 EOF
+
+chmod +x /first-run.sh
+chown ${USER}:${USER} /first-run.sh
+
+echo "Please run /first-run.sh as your normal user."

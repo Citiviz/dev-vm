@@ -1,7 +1,7 @@
 # fix wrong min_size algo for expert_recipe
 d-i preseed/early_command string \
 	echo "[local] downloading portman-auto "min_size" patch."; \
-	wget -q -O /dev/stdout http://10.0.2.2/seeds/files/kubuntu-11.10_partman-lvm-fix.tar | tar x && \
+	wget -q -O /dev/stdout http://mirror.citiviz.vpn/seeds/files/kubuntu-11.10_partman-lvm-fix.tar | tar x && \
 	echo "[local] patched." || \
 	(echo "[local] couldn't download patch. Check your VPN connection!" && false)
 
@@ -21,7 +21,7 @@ d-i netcfg/wireless_wep string
 d-i mirror/protocol string http
 d-i mirror/http/hostname string mirror.switch.ch
 d-i mirror/http/directory string /ftp/mirror/ubuntu
-d-i mirror/http/proxy string http://10.0.2.2:3142/
+d-i mirror/http/proxy string http://mirror.citiviz.vpn:3142/
 d-i mirror/suite string oneiric
 d-i clock-setup/utc boolean true
 d-i time/zone string Europe/Zurich
@@ -129,10 +129,10 @@ d-i apt-setup/security_path string /ubuntu
 d-i apt-setup/local0/comment string \
     "Citiviz Debian/Ubuntu Mirror - http://mirror.citiviz.vpn/repo/ubuntu"
 d-i apt-setup/local0/repository string \
-    http://127.0.0.1/repo/ubuntu oneiric main
+    http://mirror.citiviz.vpn/repo/ubuntu oneiric main
 d-i apt-setup/local0/source boolean false
 d-i apt-setup/local0/key string \
-    http://127.0.0.1/repo/root@mirror.citiviz.vpn.gpg
+    http://mirror.citiviz.vpn/repo/root@mirror.citiviz.vpn.gpg
 
 d-i debian-installer/allow_unauthenticated string false
 tasksel tasksel/first multiselect kubuntu-desktop
@@ -201,14 +201,36 @@ xserver-xorg xserver-xorg/config/monitor/mode-list \
 
 
 d-i preseed/late_command string \
-    echo "entering /target/root"; \
-    cd /target/root/; \
-    echo "fetching packages.list."; \
-    wget http://127.0.0.1/seeds/files/dev-vm/packages.list; \
-    echo "installing extra packages."; \
-    cat packages.list | xargs apt-install; \
-    echo "fetching post-install.sh script."; \
-    wget http://127.0.0.1/seeds/files/dev-vm/post-install.sh; chmod +x /target/root/post-install.sh; \
-    echo "executing post-install.sh script."; \
-    in-target /root/post-install.sh
-
+    echo "entering /target/root";                                           \
+    mkdir -p /target/root;                                                  \
+    cd /target/root/;                                                       \
+    echo "fetching packages.list.";                                         \
+    wget http://mirror.citiviz.vpn/seeds/files/dev-vm/packages.list; || (   \
+        echo "Failed to download packages.list. Please do it manually.";    \
+        sh;                                                                 \
+        echo "packages.list assumed to be here".                            \
+    );                                                                      \
+    echo "installing extra packages.";                                      \
+    apt-install $(cat packages.list | tr '\n' ' ') || (                     \
+        echo "Failed to install packages. Please fix it and try again.";    \
+        sh;                                                                 \
+        echo "Now going to post-install...";                                \
+    );                                                                      \
+    echo "fetching post-install.sh script.";                                \
+    wget http://mirror.citiviz.vpn/seeds/files/dev-vm/post-install.sh || (  \
+        echo "Failed to fetch post-install.sh. Please do it manually.";     \
+        sh;                                                                 \
+        echo "Now going to execute post-install.sh.";                       \
+    );                                                                      \
+    chmod +x /target/root/post-install.sh || (                              \
+        echo "Can't chmod +x post-install.sh":                              \
+        sh;                                                                 \
+        echo "Executing post-install.sh.";                                  \
+    );                                                                      \
+    echo "executing post-install.sh script.";                               \
+    in-target /root/post-install.sh || (                                    \
+        echo "in-target post-install.sh execution failed.";                 \
+        sh;                                                                 \
+    );                                                                      \
+    echo "late_command END";
+    

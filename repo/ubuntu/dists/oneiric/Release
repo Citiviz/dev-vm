@@ -1,36 +1,36 @@
 Origin: mirror.citiviz.vpn/ubuntu
 Label: Citiviz Overlay Ubuntu Repository
 Codename: oneiric
-Date: Sat, 04 Aug 2012 00:25:16 UTC
+Date: Sun, 05 Aug 2012 00:29:28 UTC
 Architectures: i386 amd64
 Components: main
 Description: Citiviz Overlay Ubuntu Repository
 MD5Sum:
- 523f678d5f3091929a2187ed3750aaaa 807 main/binary-i386/Packages
- 29391f56baa47f63c8c38c2984de5287 507 main/binary-i386/Packages.gz
+ a7c4eb5533b6aa3370c64fa0702b6997 1416 main/binary-i386/Packages
+ a82b23d9bb9fcaaa948d73a5bdf5d800 770 main/binary-i386/Packages.gz
  1ea008c40e267d6f4cbf5c9228a56685 157 main/binary-i386/Release
- 523f678d5f3091929a2187ed3750aaaa 807 main/binary-amd64/Packages
- 29391f56baa47f63c8c38c2984de5287 507 main/binary-amd64/Packages.gz
+ a7c4eb5533b6aa3370c64fa0702b6997 1416 main/binary-amd64/Packages
+ a82b23d9bb9fcaaa948d73a5bdf5d800 770 main/binary-amd64/Packages.gz
  64840cc841146850d2d2b155d04486d3 158 main/binary-amd64/Release
  ca19ec5382207050a76e51e910e823b0 1023 main/source/Sources
  ffff17b014af4b5177115efc0d942d8d 573 main/source/Sources.gz
  fea26e3a62051947b50a9e1f6e090b6a 159 main/source/Release
 SHA1:
- 5e7261ba7418331f32c0501282b12099bc2088c3 807 main/binary-i386/Packages
- 2045c75839fd19ded21378acb87ab3d38d48fa8c 507 main/binary-i386/Packages.gz
+ e906e118f286d67b5be25f1acdbc2a3df5b56fa3 1416 main/binary-i386/Packages
+ a6f974908d1b0da3f513628d66f5bfb14a6d7fbf 770 main/binary-i386/Packages.gz
  0b63b664e04039f3d8068627393a32e676520967 157 main/binary-i386/Release
- 5e7261ba7418331f32c0501282b12099bc2088c3 807 main/binary-amd64/Packages
- 2045c75839fd19ded21378acb87ab3d38d48fa8c 507 main/binary-amd64/Packages.gz
+ e906e118f286d67b5be25f1acdbc2a3df5b56fa3 1416 main/binary-amd64/Packages
+ a6f974908d1b0da3f513628d66f5bfb14a6d7fbf 770 main/binary-amd64/Packages.gz
  d91b99922b046209aa205c40ad2b37642fce4e32 158 main/binary-amd64/Release
  3f58c05a7dddd6a2c04cd9208f15b415a6562124 1023 main/source/Sources
  ea6142fa35b3ff76302cb0a76f41b3e9634dba03 573 main/source/Sources.gz
  dafcc4164c480380fe5b6c2b7f12db0c36523e89 159 main/source/Release
 SHA256:
- fed5806763516d5f67de603b8bdb1bba5760e457c9b8c7918b34ffc78e3616b2 807 main/binary-i386/Packages
- 6a68ee009bf958a9ee16acaab3feec483b5926b3c24ea0afe82ca730bf641f51 507 main/binary-i386/Packages.gz
+ 025c45388ec45150eab8d0df773ae4dc58a1a667675357375501a2fe040bb33c 1416 main/binary-i386/Packages
+ 6f29137b8d27a084a89f2029515bae14e01e931ca47b073f87cc88059db4b06c 770 main/binary-i386/Packages.gz
  85f7dcbb6b4be55d14984ca92205cb14498f049040b85f4be8e6f5bee2bb3e95 157 main/binary-i386/Release
- fed5806763516d5f67de603b8bdb1bba5760e457c9b8c7918b34ffc78e3616b2 807 main/binary-amd64/Packages
- 6a68ee009bf958a9ee16acaab3feec483b5926b3c24ea0afe82ca730bf641f51 507 main/binary-amd64/Packages.gz
+ 025c45388ec45150eab8d0df773ae4dc58a1a667675357375501a2fe040bb33c 1416 main/binary-amd64/Packages
+ 6f29137b8d27a084a89f2029515bae14e01e931ca47b073f87cc88059db4b06c 770 main/binary-amd64/Packages.gz
  d0c7de14e208b14589596a6d5ad8d68dae08ec6b846f2bf00a25fc8080cac10b 158 main/binary-amd64/Release
  d2d9fc518aff52f3d733d7b5c07dc12abbfd82af5f85b79114bf7fd1a3dc3ff3 1023 main/source/Sources
  8496c409aa8f709ae21df72f4dc5bf099d734d65ba06a2589fedc5226e96cb4c 573 main/source/Sources.gz

@@ -1,3 +1,22 @@
+Package: citiviz-ca-certificates
+Essential: no
+Maintainer: Ilya Cassina <ilya.cassina@citiviz.com>
+Version: 1.0
+Architecture: all
+Pre-Depends: ca-certificates
+Priority: required
+Section: security
+Filename: pool/main/c/citiviz-ca-certificates/citiviz-ca-certificates_1.0_all.deb
+Size: 5576
+SHA256: 9c3d90fe27f9083b508ae7cd7c609899fe2f5813b70392cb79cd7ace014057ce
+SHA1: 50534e3296cadfc51eef62acaae9cbf8751af52e
+MD5sum: b0ec1b08910a9fa105eab95ecbbcbbe2
+Description: Citiviz CA certificates.
+ Contains the following certification authorities:
+ * Citiviz Root CA
+ * Citiviz Internal CA
+ * Citiviz Internal-VPN CA
+
 Package: python-interval
 Source: interval
 Version: 1.0.0-1

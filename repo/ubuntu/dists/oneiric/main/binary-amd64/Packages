@@ -17,6 +17,41 @@ Description: Citiviz CA certificates.
  * Citiviz Internal CA
  * Citiviz Internal-VPN CA
 
+Package: python-geoalchemy
+Source: geoalchemy
+Version: 0.7.2dev-1
+Architecture: all
+Maintainer: Eric Lemoine <eric.lemoine@camptocamp.com>
+Installed-Size: 1800
+Depends: python2.7 | python2.6, python (>= 2.7.1-0ubuntu2), python (<< 2.8), python-sqlalchemy (>= 0.6~), python-sqlalchemy (<< 0.7)
+Priority: optional
+Section: python
+Filename: pool/main/g/geoalchemy/python-geoalchemy_0.7.2dev-1_all.deb
+Size: 54640
+SHA256: cb1eae87012d49b2a21656a3e3a1dde49f5760b778a0c0db98374fa7fdf7a284
+SHA1: 1c9fc5f0a99a2163f54cbac1e05108668988f84c
+MD5sum: 141af3b235e9dd3659b4085f6816815c
+Description: Using SQLAlchemy with Spatial Databases
+ ==========
+ GeoAlchemy
+ ==========
+ .
+ GIS Support for `SQLAlchemy <http://www.sqlalchemy.org/>`_.
+ .
+ Introduction
+ ------------
+ GeoAlchemy is an extension of SQLAlchemy. It provides support for
+ Geospatial data types at the ORM layer using SQLAlchemy. It aims to
+ support spatial operations and relations specified by the Open Geospatial
+ Consortium (OGC). The project started under Google Summer of Code Program
+ under the mentorship of `Mark Ramm-Christensen <http://compoundthinking.com/blog/>`_.
+ .
+ Requirements
+ ------------
+ Requires SQLAlchemy > 0.6. Supported on Python 2.5 and Python 2.6.
+ Should also work with Python 2.4 but has not been tested. It also
+ requires a supported spatial database.
+
 Package: python-interval
 Source: interval
 Version: 1.0.0-1

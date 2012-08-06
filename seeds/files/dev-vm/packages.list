@@ -8,6 +8,8 @@ python-egenix-mxdatetime
 python-egenix-mxtools 
 python-shapely 
 python-interval 
+python-sqlalchemy
+python-sqlalchemy-doc
 openvpn 
 network-manager-openvpn 
 build-essential 

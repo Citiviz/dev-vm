@@ -54,22 +54,22 @@ cd $FR_DIR
 show_and_run() {
     local name
     local cmd
-    name=$1
+    name=\$1
     shift
-    cmd=$*
+    cmd=\$*
 
-    echo "[${name}] ${cmd}"
-    . ${cmd}
+    echo "[\${name}] \${cmd}"
+    . \${cmd}
 }
 
 do_script() {
     local what
     local args
-    what=$1
+    what=\$1
     shift
-    args=$8
+    args=\$*
 
-    show_and_run script/${what} ${what} ${args}
+    show_and_run script/\${what} \${what} \${args}
 }
 
 do_script init-git           "${NAME}" "${EMAIL}"

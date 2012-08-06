@@ -10,6 +10,7 @@ python-shapely
 python-interval 
 python-sqlalchemy
 python-sqlalchemy-doc
+python-geoalchemy
 openvpn 
 network-manager-openvpn 
 build-essential 

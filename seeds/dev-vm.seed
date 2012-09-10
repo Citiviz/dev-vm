@@ -205,7 +205,7 @@ d-i preseed/late_command string \
     mkdir -p /target/root;                                                  \
     cd /target/root/;                                                       \
     echo "fetching packages.list.";                                         \
-    wget http://mirror.citiviz.vpn/seeds/files/dev-vm/packages.list; || (   \
+    wget http://mirror.citiviz.vpn/seeds/files/dev-vm/packages.list  || (   \
         echo "Failed to download packages.list. Please do it manually.";    \
         sh;                                                                 \
         echo "packages.list assumed to be here".                            \

@@ -6,6 +6,11 @@ rm -rf $FR_DIR
 mkdir -p $FR_DIR
 cd $FR_DIR
 
+    # add kakrueger/openstreetmap for osm2pgsql
+    add-apt-repository ppa:kakrueger/openstreetmap
+    apt-get update
+    apt-get install -y osm2pgsql
+
     wget http://mirror.citiviz.vpn/seeds/files/dev-vm/config.tar
     wget http://mirror.citiviz.vpn/seeds/files/dev-vm/scripts.tar
 
